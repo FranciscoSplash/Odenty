@@ -8,10 +8,11 @@ import Especialidade from "../models/Especialidade.js";
 import Consultas from "../models/Consultas.js";
 import User from "../models/User.js";
 import Appointments from "../models/Appointments.js";
+import File from "../models/Files.js";
 
 
 
-const models = [User, Patient, Appointments, Consultas, Medic, Especialidade];
+const models = [User, Patient, Appointments, Consultas, Medic, Especialidade, File];
 
 
 

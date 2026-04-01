@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+   
+
+}
+
+.login{
+    width: 350px;
+    margin: 100px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Sombra suave */;
+}
+
+.login button{
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 92%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.login input{
+    border-radius: 5px;
+    padding: 12px;
+    width: 85%;
+    margin-bottom: 15px;
+    border:1px solid #ddd;
+
+}
+.login input:focus{
+    border-color: #007bff;
+}
+.login h2{
+  margin-bottom: 20px;
+  font-weight: bold;
+  
+}
+.login a{
+      display: flex;
+      justify-content: center;
+    text-decoration: none;
+    margin-top: 40px;
+}
+
+.paciente {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  gap: 8px;
+}
+
+/* esconde o checkbox padrão */
+.paciente input {
+  display: none;
+}
+
+/* caixa personalizada */
+.paciente span {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  transition: 0.2s;
+}
+
+/* quando marcado */
+.paciente input:checked + span {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+/* check dentro */
+.paciente input:checked + span::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 3px;
+}

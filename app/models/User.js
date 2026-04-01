@@ -12,7 +12,9 @@ class User extends Model{
             // Campo que REALMENTE salva no banco
             password_hash: Sequelize.STRING,
 
-            provider: Sequelize.BOOLEAN
+            provider: Sequelize.BOOLEAN,
+             // Adiciona esta linha:
+             avatar_id: Sequelize.INTEGER, 
         }, {
             sequelize,
             tableName: 'users',
@@ -28,7 +30,14 @@ class User extends Model{
         });
 
         return this; 
+
+
+       
     }
+     static associate(models){
+        // Relacionamento 1-1 entre User e Files (avatar)
+            this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+        }
         checkPassword(senha){
             return bcrypt.compare(senha, this.password_hash);
         }

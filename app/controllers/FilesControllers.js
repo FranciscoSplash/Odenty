@@ -1,4 +1,4 @@
-import File from '../models/File.js';
+import File from '../models/Files.js';
 
 
 class FilesControllers {

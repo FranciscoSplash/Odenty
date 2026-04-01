@@ -1,8 +1,8 @@
-import sequilize, {Model} from 'sequelize';
+import Sequelize, {Model} from 'sequelize';
 
 
 
-class Files extends Model{
+class File extends Model{
     static init(sequelize){
         super.init({
            name: Sequelize.STRING, // Nome original do arquivo (ex: foto.jpg)
@@ -18,7 +18,7 @@ class Files extends Model{
       {
         sequelize,
         tableName: 'files', // Garante que use a tabela correta no MySQL
-        underscored: true,
+        underscored: false, // Se na migration está 'createdAt', aqui deve ser false
       }
     );
 
@@ -29,4 +29,4 @@ class Files extends Model{
 
 
 
-    export default Files;
+    export default File;

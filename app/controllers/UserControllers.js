@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import File from '../models/Files.js';
 import{Op} from 'sequelize';
 import * as Yup from 'yup';
 
@@ -68,9 +69,19 @@ return res.json(user);
     async show(req, res){
 
         const user =await User.findByPk(req.params.id, {
-             // Segurança: Não retorna o hash da senha no detalhe do usuário
-            attributes: {exclude: ['senha', 'password_hash']
-        },
+
+           //. Campos que você quer da tabela USERS
+      attributes: ['id', 'nome', 'email', 'provider', 'avatar_id'],
+
+      // . Relacionamento com a tabela de ARQUIVOS
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          // Os campos 'path' e 'url' devem ficar AQUI dentro
+          attributes: ['id', 'path', 'url'],
+                
+        }],
     });
             if(!user){
                 return res.status(404).json({error: 'Usuário não encontrado'})
@@ -85,7 +96,8 @@ return res.json(user);
             senha:Yup.string().required().min(8),
             provider:Yup.boolean(),
             confirmacaoSenha:Yup.string().when('senha', (senha, field)=>
-                senha ? field.required().oneOf([Yup.ref('senha')]): field)
+                senha ? field.required().oneOf([Yup.ref('senha')]): field),
+            avatar_id: Yup.number().integer().notRequired(),
             
         });
 
@@ -99,8 +111,11 @@ return res.json(user);
     if (userExists) {
         return res.status(400).json({ error: 'Usuário já existe.' });
     }
-            const {id, nome, email, provider, createdAt, updatedAt}= await User.create(req.body);
-            return res.status(201).json({id, nome, email, provider, createdAt, updatedAt})
+            const {id, nome, email, provider, createdAt, avatar_id, updatedAt}= await User.create(req.body
+            );
+
+            
+            return res.status(201).json({id, nome, email, provider, createdAt, avatar_id, updatedAt})
 
     }
     async update(req, res) {
@@ -109,6 +124,7 @@ return res.json(user);
             nome: Yup.string(),
             email: Yup.string().email(),
             provider: Yup.boolean(),
+            avatar_id: Yup.number().integer(),
             senhaAntiga: Yup.string().min(8),
 
             // Se enviou senhaAntiga, a 'senha' (nova) é obrigatória
@@ -159,6 +175,7 @@ return res.json(user);
             nome,
             email: user.email,     // pegando o e-mail atualizado do objeto user
             provider,
+            avatar_id: user.avatar_id, // Retorna o avatar_id atualizado
             createdAt,
             updatedAt
         });
